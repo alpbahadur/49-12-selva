@@ -1,10 +1,920 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width, initial-scale=1.0">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selva Cocina Salvaje | Contemporary Latin Fusion | Santurce, San Juan</title>
+    <meta name="description" content="Contemporary Latin fusion restaurant and cocktail bar in Santurce, San Juan. Creative cocktails, sushi, and tapas in a vibrant urban jungle atmosphere.">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts - Montserrat Light Weights Only -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 200;
+            background: #0a0a0a;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        /* Particle Background */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Custom Colors */
+        :root {
+            --jungle-green: #2d5016;
+            --emerald: #50C878;
+            --olive: #556B2F;
+            --charcoal: #1a1a1a;
+            --magenta: #FF1DCE;
+            --gold: #FFD700;
+            --turquoise: #40E0D0;
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Thin lines everywhere */
+        .thin-border {
+            border-width: 0.5px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 0.5px solid rgba(80, 200, 120, 0.2);
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.98);
+        }
+
+        .nav-link {
+            font-weight: 200;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #f5f5f5;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--emerald);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 0.5px;
+            background: var(--emerald);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--emerald);
+            color: #0a0a0a;
+            padding: 0.75rem 2rem;
+            font-weight: 200;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border: 0.5px solid var(--emerald);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--emerald);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #f5f5f5;
+            padding: 0.75rem 2rem;
+            font-weight: 200;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border: 0.5px solid rgba(245, 245, 245, 0.3);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--turquoise);
+            color: var(--turquoise);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.7));
+        }
+
+        /* Section Divider */
+        .section-divider {
+            width: 60px;
+            height: 0.5px;
+            background: var(--emerald);
+            margin: 1.5rem auto;
+        }
+
+        .section-divider-left {
+            width: 60px;
+            height: 0.5px;
+            background: var(--emerald);
+            margin: 1.5rem 0;
+        }
+
+        /* Fade In Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Image Hover Effect */
+        .image-hover {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-hover img {
+            transition: transform 0.6s ease;
+        }
+
+        .image-hover:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 0.5rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        /* Menu Item */
+        .menu-item {
+            border-bottom: 0.5px solid rgba(80, 200, 120, 0.1);
+            padding: 1.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            border-color: rgba(80, 200, 120, 0.3);
+            padding-left: 1rem;
+        }
+
+        /* Accent Text */
+        .accent-text {
+            color: var(--emerald);
+            font-weight: 300;
+        }
+
+        /* Glow Effect */
+        .glow {
+            box-shadow: 0 0 20px rgba(80, 200, 120, 0.2);
+        }
+
+        /* Responsive Typography */
+        h1 {
+            font-weight: 100;
+            letter-spacing: 0.2em;
+        }
+
+        h2 {
+            font-weight: 200;
+            letter-spacing: 0.15em;
+        }
+
+        h3 {
+            font-weight: 200;
+            letter-spacing: 0.1em;
+        }
+
+        p {
+            font-weight: 200;
+            line-height: 1.8;
+        }
+    </style>
 </head>
 <body>
+    <!-- Particle Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+
+        <!-- Navigation -->
+        <nav class="fixed w-full top-0 z-50 transition-all duration-300" id="navbar">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0">
+                        <a href="#home">
+                            <img src="./images/profile-logo.png" alt="Selva Cocina Salvaje" class="h-12">
+                        </a>
+                    </div>
+
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a href="#story" class="nav-link">Historia</a>
+                        <a href="#menu" class="nav-link">Menú</a>
+                        <a href="#gallery" class="nav-link">Galería</a>
+                        <a href="#botanico" class="nav-link">Botánico</a>
+                        <a href="#private" class="nav-link">Eventos</a>
+                        <a href="#reservations" class="btn-primary">Reservar</a>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden fixed top-0 right-0 h-full w-64 z-50" style="background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(10px);">
+                <div class="p-6">
+                    <button id="close-menu-btn" class="text-white float-right focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                    <div class="clear-both mt-12 space-y-6">
+                        <a href="#story" class="block nav-link">Historia</a>
+                        <a href="#menu" class="block nav-link">Menú</a>
+                        <a href="#gallery" class="block nav-link">Galería</a>
+                        <a href="#botanico" class="block nav-link">Botánico</a>
+                        <a href="#private" class="block nav-link">Eventos</a>
+                        <a href="#reservations" class="block btn-primary text-center mt-8">Reservar</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero-section flex items-center justify-center">
+            <div class="absolute inset-0 z-0">
+                <img src="./images/insta-image_to_use_at_hero_section.png" alt="Selva Interior" class="w-full h-full object-cover">
+                <div class="hero-overlay"></div>
+            </div>
+
+            <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+                <img src="./images/profile-logo.png" alt="Selva" class="h-24 md:h-32 mx-auto mb-8 opacity-0 fade-in">
+                <h1 class="text-3xl md:text-5xl lg:text-6xl text-white mb-4 opacity-0 fade-in" style="animation-delay: 0.2s;">
+                    COCINA SALVAJE
+                </h1>
+                <div class="section-divider opacity-0 fade-in" style="animation-delay: 0.4s;"></div>
+                <p class="text-base md:text-lg text-white mb-3 opacity-90 opacity-0 fade-in" style="animation-delay: 0.6s;">
+                    Contemporary Latin Fusion
+                </p>
+                <p class="text-xs md:text-sm text-white mb-12 opacity-75 max-w-2xl mx-auto opacity-0 fade-in" style="animation-delay: 0.8s;">
+                    Calle Cerra · Santurce · San Juan, Puerto Rico
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center opacity-0 fade-in" style="animation-delay: 1s;">
+                    <a href="#reservations" class="btn-primary">Llamar para Reservar</a>
+                    <a href="#menu" class="btn-secondary">Explorar Menú</a>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 opacity-0 fade-in" style="animation: bounce 2s infinite; animation-delay: 1.5s;">
+                <svg class="w-5 h-5 text-white opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Story Section -->
+        <section id="story" class="py-24 md:py-32 relative" style="background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl mb-4 text-white">
+                        UNA EXPERIENCIA SALVAJE
+                    </h2>
+                    <div class="section-divider"></div>
+                    <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto mt-6">
+                        En el corazón de Calle Cerra, donde el arte urbano cobra vida
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-16 items-center mb-20">
+                    <div class="fade-in">
+                        <h3 class="text-2xl md:text-3xl mb-6 accent-text">
+                            Sabor. Creatividad. Energía.
+                        </h3>
+                        <div class="section-divider-left"></div>
+                        <p class="text-sm md:text-base leading-relaxed mb-6 text-gray-300">
+                            Selva Cocina Salvaje es más que un restaurante—es una inmersión en la selva urbana de Santurce. Ubicados en la vibrante Calle Cerra, calle con profundas raíces musicales que fue hogar de Fania Records, ahora transformada en uno de los corredores culinarios más dinámicos y creativos de San Juan.
+                        </p>
+                        <p class="text-sm md:text-base leading-relaxed mb-6 text-gray-300">
+                            Nuestro menú celebra la fusión latina contemporánea: <span class="accent-text">cócteles creativos</span>, <span class="accent-text">sushi innovador</span> y <span class="accent-text">tapas audaces</span>. Cada plato es una obra de arte, cada bebida una experiencia.
+                        </p>
+                        <p class="text-sm md:text-base leading-relaxed text-gray-300">
+                            Con DJs en vivo y una atmósfera vibrante, Selva captura el espíritu salvaje y artístico de Calle Cerra—sofisticado, energético, inolvidable.
+                        </p>
+                    </div>
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 19-48-38 Instagram.png" alt="Selva Atmosphere" class="w-full rounded-sm glow">
+                    </div>
+                </div>
+
+                <!-- Philosophy -->
+                <div class="grid md:grid-cols-3 gap-8 mt-20">
+                    <div class="text-center fade-in thin-border border-emerald-900 p-8 hover:border-emerald-600 transition-all duration-300">
+                        <div class="text-4xl mb-4">🌿</div>
+                        <h4 class="text-base uppercase tracking-widest mb-3 accent-text">Wild Kitchen</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Cocina salvaje que celebra sabores audaces y presentaciones artísticas
+                        </p>
+                    </div>
+                    <div class="text-center fade-in thin-border border-emerald-900 p-8 hover:border-emerald-600 transition-all duration-300">
+                        <div class="text-4xl mb-4">🎨</div>
+                        <h4 class="text-base uppercase tracking-widest mb-3 accent-text">Urban Art</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Inspirados por el arte callejero vibrante de Santurce Es Ley
+                        </p>
+                    </div>
+                    <div class="text-center fade-in thin-border border-emerald-900 p-8 hover:border-emerald-600 transition-all duration-300">
+                        <div class="text-4xl mb-4">🎵</div>
+                        <h4 class="text-base uppercase tracking-widest mb-3 accent-text">Live Energy</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Atmósfera eléctrica con DJs y música que hace vibrar la noche
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section id="menu" class="py-24 md:py-32 relative" style="background: #0a0a0a;">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl mb-4 text-white">
+                        NUESTRO MENÚ
+                    </h2>
+                    <div class="section-divider"></div>
+                    <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto mt-6">
+                        Fusión latina contemporánea con influencias globales
+                    </p>
+                </div>
+
+                <!-- Menu Categories -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                    <!-- Tapas -->
+                    <div class="fade-in">
+                        <h3 class="text-xl uppercase tracking-widest mb-6 accent-text text-center">Tapas</h3>
+                        <div class="space-y-4">
+                            <div class="menu-item">
+                                <div class="image-hover mb-3">
+                                    <img src="./images/Screenshot 2025-11-22 at 19-45-13 Instagram.png" alt="Tapas" class="w-full h-48 object-cover rounded-sm">
+                                </div>
+                                <p class="text-xs text-gray-400">Pequeñas delicias salvajes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sushi -->
+                    <div class="fade-in">
+                        <h3 class="text-xl uppercase tracking-widest mb-6 accent-text text-center">Sushi</h3>
+                        <div class="space-y-4">
+                            <div class="menu-item">
+                                <div class="image-hover mb-3">
+                                    <img src="./images/Screenshot 2025-11-22 at 19-45-58 Instagram.png" alt="Sushi" class="w-full h-48 object-cover rounded-sm">
+                                </div>
+                                <p class="text-xs text-gray-400">Rolls creativos y sashimi fresco</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Platos Fuertes -->
+                    <div class="fade-in">
+                        <h3 class="text-xl uppercase tracking-widest mb-6 accent-text text-center">Platos Fuertes</h3>
+                        <div class="space-y-4">
+                            <div class="menu-item">
+                                <div class="image-hover mb-3">
+                                    <img src="./images/Screenshot 2025-11-22 at 19-46-49 Instagram.png" alt="Platos Fuertes" class="w-full h-48 object-cover rounded-sm">
+                                </div>
+                                <p class="text-xs text-gray-400">Experiencias culinarias audaces</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cocktails -->
+                    <div class="fade-in">
+                        <h3 class="text-xl uppercase tracking-widest mb-6 accent-text text-center">Cócteles</h3>
+                        <div class="space-y-4">
+                            <div class="menu-item">
+                                <div class="image-hover mb-3">
+                                    <img src="./images/Screenshot 2025-11-22 at 19-48-17 Instagram.png" alt="Cocktails" class="w-full h-48 object-cover rounded-sm">
+                                </div>
+                                <p class="text-xs text-gray-400">Mixología creativa y artesanal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Dishes -->
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 19-44-18 Instagram.png" alt="Dish" class="w-full h-64 object-cover rounded-sm glow">
+                    </div>
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 19-46-53 Instagram.png" alt="Dish" class="w-full h-64 object-cover rounded-sm glow">
+                    </div>
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 20-30-35 Instagram.png" alt="Dish" class="w-full h-64 object-cover rounded-sm glow">
+                    </div>
+                </div>
+
+                <div class="text-center mt-12 fade-in">
+                    <p class="text-sm text-gray-400 mb-6">
+                        Nuestro menú cambia con las estaciones y la creatividad del chef
+                    </p>
+                    <a href="#reservations" class="btn-primary">Reservar Mesa</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-24 md:py-32 relative" style="background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl mb-4 text-white">
+                        GALERÍA
+                    </h2>
+                    <div class="section-divider"></div>
+                </div>
+
+                <div class="gallery-grid">
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 19-44-22 Instagram.png" alt="Gallery" class="w-full h-72 object-cover">
+                    </div>
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 19-44-40 Instagram.png" alt="Gallery" class="w-full h-72 object-cover">
+                    </div>
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 19-44-47 Instagram.png" alt="Gallery" class="w-full h-72 object-cover">
+                    </div>
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 19-44-59 Instagram.png" alt="Gallery" class="w-full h-72 object-cover">
+                    </div>
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 19-45-06 Instagram.png" alt="Gallery" class="w-full h-72 object-cover">
+                    </div>
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 19-45-20 Instagram.png" alt="Gallery" class="w-full h-72 object-cover">
+                    </div>
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 19-46-19 Instagram.png" alt="Gallery" class="w-full h-72 object-cover">
+                    </div>
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 19-46-38 Instagram.png" alt="Gallery" class="w-full h-72 object-cover">
+                    </div>
+                    <div class="fade-in image-hover">
+                        <img src="./images/Screenshot 2025-11-22 at 19-47-53 Instagram.png" alt="Gallery" class="w-full h-72 object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Botanico Section -->
+        <section id="botanico" class="py-24 md:py-32 relative" style="background: #0a0a0a;">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl mb-4 text-white">
+                        BOTÁNICO
+                    </h2>
+                    <div class="section-divider"></div>
+                    <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto mt-6">
+                        Nuestro patio al aire libre
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div class="fade-in image-hover order-2 md:order-1">
+                        <img src="./images/botanico.png" alt="Botanico Patio" class="w-full rounded-sm glow">
+                    </div>
+                    <div class="fade-in order-1 md:order-2">
+                        <h3 class="text-2xl md:text-3xl mb-6 accent-text">
+                            Un Oasis Urbano
+                        </h3>
+                        <div class="section-divider-left"></div>
+                        <p class="text-sm md:text-base leading-relaxed mb-6 text-gray-300">
+                            Botánico es nuestro jardín secreto—un patio al aire libre donde la selva urbana cobra vida. Bajo las estrellas de Santurce, disfruta de cócteles artesanales mientras DJs en vivo crean la banda sonora perfecta.
+                        </p>
+                        <p class="text-sm md:text-base leading-relaxed mb-6 text-gray-300">
+                            El espacio ideal para noches tropicales, celebraciones especiales, o simplemente perderse en la atmósfera única de Calle Cerra.
+                        </p>
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-center text-sm text-gray-400">
+                                <svg class="w-4 h-4 mr-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Ambiente al aire libre
+                            </div>
+                            <div class="flex items-center text-sm text-gray-400">
+                                <svg class="w-4 h-4 mr-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                DJs y música en vivo
+                            </div>
+                            <div class="flex items-center text-sm text-gray-400">
+                                <svg class="w-4 h-4 mr-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Cócteles de especialidad
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-16 fade-in image-hover">
+                    <img src="./images/botanico2.png" alt="Botanico Bar" class="w-full h-96 object-cover rounded-sm glow">
+                </div>
+            </div>
+        </section>
+
+        <!-- Private Events Section -->
+        <section id="private" class="py-24 md:py-32 relative" style="background: linear-gradient(to bottom, #1a1a1a, #0a0a0a);">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div class="fade-in">
+                        <h2 class="text-3xl md:text-4xl lg:text-5xl mb-4 text-white">
+                            EVENTOS PRIVADOS
+                        </h2>
+                        <div class="section-divider-left"></div>
+                        <p class="text-sm md:text-base leading-relaxed mb-6 text-gray-300">
+                            Celebra tus momentos especiales en el ambiente único de Selva. Ya sea una fiesta íntima, evento corporativo, o celebración salvaje, creamos experiencias inolvidables.
+                        </p>
+                        <p class="text-sm md:text-base leading-relaxed mb-8 text-gray-300">
+                            Nuestro equipo trabajará contigo para personalizar cada detalle—menú, música, ambiente—para que tu evento sea verdaderamente único.
+                        </p>
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-center text-sm text-gray-400">
+                                <svg class="w-4 h-4 mr-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Espacios privados interiores y exteriores
+                            </div>
+                            <div class="flex items-center text-sm text-gray-400">
+                                <svg class="w-4 h-4 mr-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Menús personalizados
+                            </div>
+                            <div class="flex items-center text-sm text-gray-400">
+                                <svg class="w-4 h-4 mr-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                DJs y entretenimiento en vivo
+                            </div>
+                            <div class="flex items-center text-sm text-gray-400">
+                                <svg class="w-4 h-4 mr-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Servicio dedicado
+                            </div>
+                        </div>
+                        <a href="tel:+17872421042" class="btn-primary">Consultar Eventos</a>
+                    </div>
+                    <div class="fade-in image-hover">
+                        <img src="./images/insta-private_gatherings.png" alt="Private Events" class="w-full rounded-sm glow">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reservations Section -->
+        <section id="reservations" class="py-24 md:py-32 relative" style="background: #0a0a0a;">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl mb-4 text-white">
+                        RESERVACIONES
+                    </h2>
+                    <div class="section-divider"></div>
+                    <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto mt-6">
+                        Llama para reservar tu experiencia salvaje
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 mb-12 fade-in">
+                    <!-- Contact -->
+                    <div>
+                        <h3 class="text-xl uppercase tracking-widest mb-6 accent-text">Contacto</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Teléfono</p>
+                                <a href="tel:+17872421042" class="text-lg hover:text-emerald-500 transition-colors">
+                                    +1 (787) 242-1042
+                                </a>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Ubicación</p>
+                                <p class="text-sm text-gray-300">Calle Cerra</p>
+                                <p class="text-sm text-gray-300">Santurce, San Juan</p>
+                                <p class="text-sm text-gray-300">Puerto Rico</p>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Redes Sociales</p>
+                                <div class="space-y-2">
+                                    <a href="https://www.instagram.com/selvacocinasalvaje" target="_blank" class="block text-sm hover:text-emerald-500 transition-colors">
+                                        Instagram @selvacocinasalvaje
+                                    </a>
+                                    <a href="https://www.facebook.com/p/Selva-100083173983894/" target="_blank" class="block text-sm hover:text-emerald-500 transition-colors">
+                                        Facebook
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info -->
+                    <div>
+                        <h3 class="text-xl uppercase tracking-widest mb-6 accent-text">Información</h3>
+                        <div class="thin-border border-emerald-900 p-6 rounded-sm">
+                            <p class="text-sm text-gray-300 mb-4 leading-relaxed">
+                                Recomendamos hacer reservaciones con anticipación, especialmente para fines de semana y eventos especiales.
+                            </p>
+                            <p class="text-sm text-gray-300 mb-4 leading-relaxed">
+                                Para eventos privados y grupos grandes, por favor contactarnos con al menos 48 horas de anticipación.
+                            </p>
+                            <p class="text-xs text-gray-400 leading-relaxed">
+                                Disfruta de DJs en vivo y música que hace vibrar la noche salvaje
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="text-center fade-in">
+                    <a href="tel:+17872421042" class="btn-primary text-lg px-12 py-4">
+                        Llamar para Reservar
+                    </a>
+                    <p class="text-xs text-gray-500 mt-6">
+                        Calle Cerra · Santurce · San Juan, Puerto Rico
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-16 relative" style="background: #000;">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid md:grid-cols-3 gap-12 mb-12">
+                    <!-- Brand -->
+                    <div>
+                        <img src="./images/profile-logo.png" alt="Selva" class="h-16 mb-4 opacity-80">
+                        <p class="text-xs text-gray-500 leading-relaxed">
+                            Cocina salvaje en el corazón de Santurce. Donde el arte urbano se encuentra con la fusión latina contemporánea.
+                        </p>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div>
+                        <h4 class="text-xs uppercase tracking-widest mb-4 accent-text">Enlaces</h4>
+                        <ul class="space-y-2 text-xs text-gray-400">
+                            <li><a href="#story" class="hover:text-emerald-500 transition-colors">Historia</a></li>
+                            <li><a href="#menu" class="hover:text-emerald-500 transition-colors">Menú</a></li>
+                            <li><a href="#gallery" class="hover:text-emerald-500 transition-colors">Galería</a></li>
+                            <li><a href="#botanico" class="hover:text-emerald-500 transition-colors">Botánico</a></li>
+                            <li><a href="#private" class="hover:text-emerald-500 transition-colors">Eventos</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Connect -->
+                    <div>
+                        <h4 class="text-xs uppercase tracking-widest mb-4 accent-text">Conéctate</h4>
+                        <p class="text-xs text-gray-500 mb-4 leading-relaxed">
+                            Síguenos en redes sociales para updates, eventos especiales, y la mejor vibra de Calle Cerra.
+                        </p>
+                        <div class="space-y-2">
+                            <a href="https://www.instagram.com/selvacocinasalvaje" target="_blank" class="block text-xs hover:text-emerald-500 transition-colors">
+                                Instagram
+                            </a>
+                            <a href="https://www.facebook.com/p/Selva-100083173983894/" target="_blank" class="block text-xs hover:text-emerald-500 transition-colors">
+                                Facebook
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="thin-border border-t border-gray-800 pt-8 text-center">
+                    <p class="text-xs text-gray-600">
+                        © 2025 Selva Cocina Salvaje. Todos los derechos reservados.
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Particle Background Animation
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.3 + 0.1;
+                const colors = ['80, 200, 120', '64, 224, 208', '255, 215, 0'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particles = [];
+        for (let i = 0; i < 80; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Fade In Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initial fade-in for hero elements
+        setTimeout(() => {
+            document.querySelectorAll('.hero-section .fade-in').forEach(el => {
+                el.classList.add('visible');
+            });
+        }, 200);
+    </script>
+
+    <style>
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
 </body>
 </html>
