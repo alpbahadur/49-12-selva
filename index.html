@@ -205,11 +205,27 @@
             background: linear-gradient(to bottom, rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.7));
         }
 
+        .hero-overlay::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: -1;
+        }
+
         .botanico-overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(to bottom, rgba(45, 80, 22, 0.3), rgba(10, 10, 10, 0.6));
             backdrop-filter: blur(2px);
+        }
+
+        .botanico-overlay::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: -1;
         }
 
         .botanico-particles {
