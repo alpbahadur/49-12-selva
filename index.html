@@ -38,7 +38,7 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.4;
+            opacity: 0.6;
         }
 
         .content-wrapper {
@@ -796,12 +796,24 @@
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
-                this.opacity = Math.random() * 0.3 + 0.1;
-                const colors = ['80, 200, 120', '64, 224, 208', '255, 215, 0'];
+                this.size = Math.random() * 3 + 0.5;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
+                this.opacity = Math.random() * 0.5 + 0.15;
+                // Predominantly green colors with some variety
+                const colors = [
+                    '77, 192, 115',   // emerald
+                    '80, 200, 120',   // bright green
+                    '144, 238, 144',  // light green
+                    '152, 251, 152',  // pale green
+                    '34, 139, 34',    // forest green
+                    '50, 205, 50',    // lime green
+                    '64, 224, 208',   // turquoise (occasional)
+                    '80, 200, 120',   // repeat bright green for more frequency
+                    '77, 192, 115',   // repeat emerald for more frequency
+                ];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.hasGlow = Math.random() > 0.5; // 50% of particles have glow
             }
 
             update() {
@@ -813,15 +825,22 @@
             }
 
             draw() {
+                if (this.hasGlow) {
+                    ctx.shadowBlur = 12;
+                    ctx.shadowColor = `rgba(${this.color}, ${this.opacity * 0.8})`;
+                }
                 ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
+                if (this.hasGlow) {
+                    ctx.shadowBlur = 0;
+                }
             }
         }
 
         const particles = [];
-        for (let i = 0; i < 80; i++) {
+        for (let i = 0; i < 120; i++) {
             particles.push(new Particle());
         }
 
