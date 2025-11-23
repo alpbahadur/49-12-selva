@@ -38,7 +38,7 @@
             height: 100%;
             z-index: 10;
             pointer-events: none;
-            opacity: 0.75;
+            opacity: 0.35;
         }
 
         .content-wrapper {
@@ -91,6 +91,17 @@
         section > * {
             position: relative;
             z-index: 15;
+        }
+
+        img {
+            position: relative;
+            z-index: 20;
+        }
+
+        .image-hover,
+        .image-container {
+            position: relative;
+            z-index: 20;
         }
 
         nav {
@@ -830,7 +841,7 @@
                 this.size = Math.random() * 3.5 + 0.8;
                 this.speedX = Math.random() * 0.5 - 0.25;
                 this.speedY = Math.random() * 0.5 - 0.25;
-                this.opacity = Math.random() * 0.6 + 0.2;
+                this.opacity = Math.random() * 0.25 + 0.1;
                 // Predominantly green colors with some variety
                 const colors = [
                     '77, 192, 115',   // emerald
