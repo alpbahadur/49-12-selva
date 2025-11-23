@@ -159,6 +159,20 @@
             background: linear-gradient(to bottom, rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.7));
         }
 
+        .botanico-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(45, 80, 22, 0.3), rgba(10, 10, 10, 0.6));
+            backdrop-filter: blur(2px);
+        }
+
+        .botanico-particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
         /* Section Divider */
         .section-divider {
             width: 60px;
@@ -544,7 +558,8 @@
         <section id="botanico" class="relative min-h-screen flex items-center justify-center overflow-hidden">
             <div class="absolute inset-0 z-0">
                 <img src="./images/botanico.png" alt="Botanico Patio" class="w-full h-full object-cover">
-                <div class="hero-overlay"></div>
+                <div class="botanico-overlay"></div>
+                <canvas id="botanico-particles" class="botanico-particles"></canvas>
             </div>
 
             <div class="relative z-10 text-center px-4 max-w-6xl mx-auto">
@@ -820,6 +835,79 @@
         }
 
         animateParticles();
+
+        // Botanico Particles Animation
+        const botanicoCanvas = document.getElementById('botanico-particles');
+        const botanicoCtx = botanicoCanvas.getContext('2d');
+        const botanicoSection = document.getElementById('botanico');
+
+        function resizeBotanicoCanvas() {
+            const rect = botanicoSection.getBoundingClientRect();
+            botanicoCanvas.width = rect.width;
+            botanicoCanvas.height = rect.height;
+        }
+
+        resizeBotanicoCanvas();
+        window.addEventListener('resize', resizeBotanicoCanvas);
+
+        class BotanicoParticle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * botanicoCanvas.width;
+                this.y = Math.random() * botanicoCanvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 0.3 - 0.15;
+                this.speedY = Math.random() * 0.3 - 0.15;
+                this.opacity = Math.random() * 0.4 + 0.2;
+                // Green colors - emerald, lime, mint
+                const greenColors = [
+                    '77, 192, 115',   // emerald
+                    '80, 200, 120',   // bright green
+                    '144, 238, 144',  // light green
+                    '152, 251, 152',  // pale green
+                    '34, 139, 34'     // forest green
+                ];
+                this.color = greenColors[Math.floor(Math.random() * greenColors.length)];
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > botanicoCanvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > botanicoCanvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                // Draw glow effect
+                botanicoCtx.shadowBlur = 15;
+                botanicoCtx.shadowColor = `rgba(${this.color}, ${this.opacity})`;
+                botanicoCtx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+                botanicoCtx.beginPath();
+                botanicoCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                botanicoCtx.fill();
+                botanicoCtx.shadowBlur = 0;
+            }
+        }
+
+        const botanicoParticles = [];
+        for (let i = 0; i < 60; i++) {
+            botanicoParticles.push(new BotanicoParticle());
+        }
+
+        function animateBotanicoParticles() {
+            botanicoCtx.clearRect(0, 0, botanicoCanvas.width, botanicoCanvas.height);
+            botanicoParticles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            requestAnimationFrame(animateBotanicoParticles);
+        }
+
+        animateBotanicoParticles();
 
         // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
